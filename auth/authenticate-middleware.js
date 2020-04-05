@@ -5,15 +5,17 @@
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
-  const token = req.cookies.token;
+  // const token = req.cookies.token;
+  const { token } = req.cookies;
+  // console.log('token>>>>>>>>>>>', token)
   if(!token) res.status(401).json({ you: 'shall not pass!' });
 
-  const JWT_SECRET = "STAY HOME, SAVE LIVES";
+  
 
-  jwt.verify(token, JWT_SECRET, (err,decode) => {
+  jwt.verify(token, process.env.JWT_SECRET_TOKEN, (err,decode) => {
      if(err) res.status(401).json({ you: 'shall not pass!' });
      req.token = decode;
-     next()
-  })
+     next();
+  });
 
 };
