@@ -20,5 +20,8 @@ async function add(user) {
   const user.password = bcrypt.hash(user.password, 16);
   const [id] = await db('users').insert(user);
   return await db('users').where("id", id).first();
+};
 
+module.exports = {
+  find, findById, findBy, add
 }
